@@ -10,7 +10,7 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 
-#define EXEC_FW_VER "1.0.000"
+#define EXEC_FW_VER "1.1.001"
 #define EEP_SIG_MAX_SIZE 3
 #define SSID_MAX_SIZE 32
 #define PASS_MAX_SIZE 32
@@ -82,10 +82,40 @@ void setup(void){
  
 }
 
+void tenmSecTask()
+{
+  
+}
+void hundradmSecTask()
+{
+  readInputPins();
+}
+void oneSecTask()
+{
+  updateMSLed();
+}
 
-void loop(void){
+
+void loop(void)
+{
+  static int msUpdateCnt=0;
   server.handleClient();
+  delay(100);
+  hundradmSecTask();
+    /* update module status led at every 1 Sec*/
+  if(msUpdateCnt>10)
+  {
+    oneSecTask();
+    msUpdateCnt=0;
+  }
+  msUpdateCnt++;
+
+  
+  int *inputStatus = getInputStatus();
+
+  //Serial.print(inputStatus[0]);
+  //Serial.print(inputStatus[1]);
+  //Serial.print(inputStatus[2]);
+  //Serial.println(inputStatus[3]);
+  updateOutput(inputStatus);
 } 
-
-
-

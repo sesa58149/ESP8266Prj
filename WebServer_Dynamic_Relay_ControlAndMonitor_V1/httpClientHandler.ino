@@ -82,10 +82,7 @@ void handlesetOutput()
         setOut(3, HIGH);
       }      
     }
-    else
-    {
-    Serial.println("Wrong out Ping = " + fieldName  );
-    }
+   
   }
   /*
   Serial.print("Number of Argument received Monitoring : \t");
@@ -131,11 +128,3 @@ void handlewifiSaveConf()
   server.send(302, "text/html", tmpStr);
   
 }
-
-
-
-
-
-
-
-
